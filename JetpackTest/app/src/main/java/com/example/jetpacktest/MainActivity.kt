@@ -43,6 +43,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         refershCounter()
+
+        //调用getLifecycle 获得lifecycle 对象 然后通过addObserver 来观察生命周期
+        //最后 将MyObserver() 实例传入
+        //Activity 继承自AppCompatActivity() 或者 Fragment 继承自androidx.fragment.app.Fragment
+        //则它本身就是一个LifecycleOwner的实例 Androidx库已经自动完成了
+        lifecycle.addObserver(MyObserver())
     }
 
     override fun onPause() {
