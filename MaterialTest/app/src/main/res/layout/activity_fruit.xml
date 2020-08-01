@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    CollapsingToolbarLayout 必须为 AppBarLayout 的子布局
+    AppBarLayout 必须为 CoordinatorLayout 的子布局
+-->
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!--
+        水果标题界面
+    -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:fitsSystemWindows="true">
+
+        <!--
+            CollapsingToolbarLayout 折叠以后为一个普通的ToolBar
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+
+            scroll CollapsingToolbarLayout随着水果内容详情滚动而滚动
+            exitUntilCollapsed 表示 exitUntilCollapsed 随着滚动完成折叠之后保留在界面上 不再溢出屏幕
+
+            app:layout_collapseMode 表示折叠模式
+            pin 保持不变
+            parallax 错位偏移
+
+        -->
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:contentScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:fitsSystemWindows="true">
+
+            <!--
+                android:fitsSystemWindows 表示控件可以出现在系统栏中
+                且所有父布局都要设置才行
+            -->
+            <ImageView
+                android:id="@+id/fruitImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"
+                android:fitsSystemWindows="true"/>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!--
+        水果详情界面
+        滚动方式查看屏幕外的数据
+
+        NestedScrollView(内部只允许有一个子布局) 添加了嵌套响应滚动事件的功能
+    -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <!--
+                升级到material:1.1.0以上版本后MaterialCardView，MaterialButton 等控件闪退的问题
+                加一行： android:theme="@style/Theme.MaterialComponents" ，这样就不会闪退了
+            -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="35dp"
+                app:cardCornerRadius="4dp"
+                android:theme="@style/Theme.MaterialComponents">
+
+                <TextView
+                    android:id="@+id/fruitContentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!--
+        加入一个悬浮的评论按钮
+        app:layout_anchor="@id/appBar" 标记按钮在AppVarLayout里面
+        app:layout_anchorGravity="bottom|end" 并且在右下角
+
+    -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_comment"
+        app:layout_anchor="@id/appBar"
+        app:layout_anchorGravity="bottom|end" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    在单页模式中 只会加载一个新闻标题的Fragment
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/newsTitleLayout">
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/newsTitleFrag"
+        android:name="com.example.fragmentbestpractice.NewsTitleFragment" />
+
+</FrameLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <!--  通过name 属性来显示声明要添加的类名
+            将Activity分为2个布局-->
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/leftFrag"
+        android:name="com.example.fragmenttest.LeftFragment"
+        />
+    <!--
+    <fragment
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/rightFrag"
+        android:name="com.example.fragmenttest.RightFragment"
+        android:layout_weight = "1" />
+    -->
+
+    <!-- 将右侧fragment 替换成了 FrameLayout  控件默认布局在左上角-->
+    <!--
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/rightlayout"
+        android:layout_weight="1" >
+
+    </FrameLayout>
+    -->
+
+</LinearLayout>

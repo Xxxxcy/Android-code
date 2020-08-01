@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    直接在布局中引用了 NewsContentFragment
+
+    单页模式布局
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/newsContentFrag"
+        android:name="com.example.fragmentbestpractice.NewsContentFragment" />
+
+</LinearLayout>
