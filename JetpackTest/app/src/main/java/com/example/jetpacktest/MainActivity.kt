@@ -4,9 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.content.edit
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.concurrent.thread
 
 //手机在旋转的时候 Activity会重建 并且不会保留数据
 //通过ViewModel来解决
@@ -33,28 +36,73 @@ class MainActivity : AppCompatActivity() {
                     .get(MainViewModel::class.java)
 
         plueOneBtn.setOnClickListener {
-            viewModel.counter++
-            refershCounter()
+            viewModel.plusOne()
         }
 
         clearBtn.setOnClickListener {
-            viewModel.counter = 0
-            refershCounter()
+            viewModel.clear()
         }
 
-        refershCounter()
+        getUserBtn.setOnClickListener {
+            val userId = (0..10000).random().toString()
+            //获取ID数据
+            viewModel.getUser(userId)
+        }
+
+        //观察数据 并显示在TextView上
+        viewModel.user.observe(this, Observer {
+            user -> infoText.text = user.firstName
+        })
 
         //调用getLifecycle 获得lifecycle 对象 然后通过addObserver 来观察生命周期
         //最后 将MyObserver() 实例传入
         //Activity 继承自AppCompatActivity() 或者 Fragment 继承自androidx.fragment.app.Fragment
         //则它本身就是一个LifecycleOwner的实例 Androidx库已经自动完成了
-        lifecycle.addObserver(MyObserver())
+        //lifecycle.addObserver(MyObserver())
+
+        //通过MainViewModel 中的 count 变成了 LiveData 对象
+        //任何LivaData对象都可以调用 observe方法来观察 数据对象
+        viewModel.counter.observe(this, Observer {
+                count -> infoText.text = count.toString()
+        })
+
+        val userDao = AppDatabase.getDatabase(this).userDao()
+        val user1 = User("Tom", "Brady", 40)
+        val user2 = User("Tom", "Hanks", 63)
+
+        addDataBtn.setOnClickListener {
+            thread {
+                user1.id = userDao.insertUser(user1)
+                user2.id = userDao.insertUser(user2)
+            }
+        }
+
+        updateDataBtn.setOnClickListener {
+            thread {
+                user1.age = 42
+                userDao.updateUser(user1)
+            }
+        }
+
+        deleteDataBtn.setOnClickListener {
+            thread {
+                userDao.deleteUserByLastName("Brady")
+            }
+        }
+
+        queryDataBtn.setOnClickListener {
+            thread {
+                for (user in userDao.loadAllUsers()) {
+                    Log.d("MainActivity", user.toString())
+                }
+            }
+        }
     }
 
     override fun onPause() {
         super.onPause()
         sp.edit {
-            putInt("count_reserved", viewModel.counter)
+            putInt("count_reserved", viewModel.counter.value ?: 0)
         }
     }
 
