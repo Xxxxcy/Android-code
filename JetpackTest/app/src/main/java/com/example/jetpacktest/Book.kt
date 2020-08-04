@@ -4,8 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Book(var name: String, var page: Int) {
+data class Book(var name: String, var pages: Int, var author: String) {
 
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0
+    var id = 0L
+
 }

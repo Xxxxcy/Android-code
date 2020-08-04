@@ -8,7 +8,10 @@ import android.util.Log
 import androidx.core.content.edit
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
 //手机在旋转的时候 Activity会重建 并且不会保留数据
@@ -96,6 +99,18 @@ class MainActivity : AppCompatActivity() {
                     Log.d("MainActivity", user.toString())
                 }
             }
+        }
+
+        doWorkBtn.setOnClickListener {
+
+            //OneTimeWorkRequest 接受 SimpleWorker中返回的Class对象 创建一次后台任务请求
+            //延时运行 添加标签
+            val request = OneTimeWorkRequest.Builder(SimpleWorker::class.java)
+                .addTag("simple")
+                .setInitialDelay(5, TimeUnit.SECONDS)
+                .build()
+            //系统在合适的时间运行请求
+            WorkManager.getInstance(this).enqueue(request)
         }
     }
 
