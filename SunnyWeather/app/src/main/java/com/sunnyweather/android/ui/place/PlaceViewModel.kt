@@ -27,4 +27,12 @@ class PlaceViewModel : ViewModel() {
     fun searchPlaces(query: String) {
         searchLiveData.value = query
     }
+
+    //sharedPreferences 对搜索的城市进行保存 业务逻辑和 PlaceViewModel也相关 需要在其中也封装
+    fun savePlace(place: Place) = Repository.savePlace(place)
+
+    fun getSavedPlace() = Repository.getPlace()
+
+    fun isPlaceSaved() = Repository.isPlaceSaved()
+
 }
