@@ -16,6 +16,8 @@
     <!--
         android:fitsSystemWindows="true"
         为系统状态栏留出空间 优化背景图和系统栏融合
+
+        在屏幕左侧设置一个切换城市的按钮
     -->
     <FrameLayout
         android:id="@+id/titleLayout"
@@ -34,6 +36,14 @@
             android:ellipsize="middle"
             android:textColor="#fff"
             android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/navBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ic_home" />
 
     </FrameLayout>
 

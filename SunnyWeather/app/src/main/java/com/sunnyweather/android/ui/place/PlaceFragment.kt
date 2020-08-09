@@ -36,6 +36,7 @@ class PlaceFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         //先进行判断 是否储存城市数据 如果储存就取出并解析成Place对象 跳转传递到WeatherActivity
+        //PlaceFragment嵌入MainActivity中且之前存在选中的城市才跳转 防止无线循环跳转
         if (activity is MainActivity && viewModel.isPlaceSaved()) {
             val place = viewModel.getSavedPlace()
             val intent = Intent(context, WeatherActivity::class.java).apply {
